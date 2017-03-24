@@ -1,0 +1,67 @@
+
+<p id="notice"><%= notice %></p>
+
+<h1>The Apartment App</h1>
+
+<br>
+
+<%= link_to 'Create Apartment', new_apartment_path %>
+<%= form_tag(apartments_path, :method => "get") do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+<br>
+<br>
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th>Apartments</th>
+      <th>Name</th>
+      <!-- <th>Description</th> -->
+      <!-- <th>Phone number</th> -->
+      <!-- <th>Hours to contact</th> -->
+      <th>Address</th>
+      <!-- <th>Unit #</th> -->
+      <th>City</th>
+      <th>Postalcode</th>
+      <th>State</th>
+      <!-- <th>Country</th> -->
+      <th>User</th>
+      <th>Interact</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @apartments.each do |apartment| %>
+      <% if @ability.can? :read, apartment, user_id: current_user.id %>
+        <tr>
+          <td><%= link_to image_tag(apartment.image.url(:med)), apartment_path(apartment.id) %></td>
+          <td><%= apartment.name %></td>
+          <!-- <td><%= apartment.description %></td> -->
+          <!-- <td><%= apartment.phone_number %></td> -->
+          <!-- <td><%= apartment.hours_to_contact %></td> -->
+          <td><%= apartment.street1 %></td>
+          <!-- <td><%= apartment.street2 %></td> -->
+          <td><%= apartment.city %></td>
+          <td><%= apartment.postalcode %></td>
+          <td><%= apartment.state %></td>
+          <!-- <td><%= apartment.country %></td> -->
+          <td><%= apartment.user.email %></td>
+          <td><%= link_to 'Show', apartment %>
+            <% if @ability.can? :manage, apartment, user_id: current_user.id  %>
+              | <%= link_to 'Edit', edit_apartment_path(apartment) %>
+              | <%= link_to 'Destroy', apartment, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
