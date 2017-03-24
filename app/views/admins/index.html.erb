@@ -6,11 +6,26 @@
         <th>Username</th>
         <th>Email</th>
         <th>Role</th>
+        <th>Toggle Role</th>
       </tr>
     </thead>
   </thead>
   <tbody>
-  <% @users.each do |user|
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.username %></td>
+      <td><%= user.email %></td>
+      <td><%= user.roles.last.name %></td>
+      <td>
+        <%= form_tag("/admins/" + user.id.to_s + "?role=admin", method: :PUT) do %>
+          <input type="submit" value="Change Role"/>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
-<p>Find me in app/views/admins/index.html.erb</p>
+
+<br>
+
+<%= link_to 'Back', apartments_path %>

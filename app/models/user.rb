@@ -1,5 +1,11 @@
 class User < ApplicationRecord
   rolify
+
+  after_create :assign_role
+
+  def assign_role
+    add_role(:user)
+  end
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -12,5 +18,5 @@ class User < ApplicationRecord
   validates_attachment :avatar,
     content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] },
     size: { in: 0..10.megabytes }
-    
+
 end

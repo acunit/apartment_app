@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  get 'admin' => 'admin#index'
+  get 'admins' => 'admins#index'
 
-  put "admin/:id" => "admin#update"
-  patch "admin/:id" => "admin#update"
+  put "admins/:id" => "admins#update"
+
+  patch "admins/:id" => "admins#update"
 end
